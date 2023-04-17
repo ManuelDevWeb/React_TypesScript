@@ -16,7 +16,10 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    // Agregamos las siguientes lineas
+    "noImplicitAny": true,
+    "noImplicitReturns": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
