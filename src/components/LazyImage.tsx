@@ -1,4 +1,3 @@
-import { type } from "os";
 import { useRef, useEffect, useState } from "react";
 // Types of react
 import type { ImgHTMLAttributes } from "react";
