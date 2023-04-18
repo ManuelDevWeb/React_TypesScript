@@ -1,6 +1,41 @@
+import { useState } from "react";
+// Types of react
+import type { MouseEventHandler } from "react";
+import { NextPage } from "next";
 import Head from "next/head";
 
-export default function Home() {
+// Components
+import { RandomFox } from "@/components/RandomFox";
+
+// generate a random function between 1 and 123
+const random = () => Math.floor(Math.random() * 123) + 1;
+
+// generate simple unique id
+const generateId = () => Math.random().toString(36).substring(2, 9);
+
+// define the type of the state
+interface ImageItem {
+  id: string;
+  url: string;
+}
+
+const Home: NextPage = () => {
+  // useState with generic type to define the type of the state
+  const [images, setImages] = useState<ImageItem[]>([]);
+
+  // function to add new fox, is type MouseEventHandler
+  const addNewFox: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+
+    const newImageItem: ImageItem = {
+      id: generateId(),
+      url: `https://randomfox.ca/images/${random()}.jpg`,
+    };
+
+    // update the state
+    setImages([...images, newImageItem]);
+  };
+
   return (
     <>
       <Head>
@@ -12,7 +47,13 @@ export default function Home() {
 
       <main>
         <h1 className="text-3xl font-bold underline">Hello React</h1>
+        <button onClick={addNewFox}>Add new fox</button>
+        {images.map(({ id, url }) => (
+          <RandomFox key={id} image={url} alt={url + id} />
+        ))}
       </main>
     </>
   );
-}
+};
+
+export default Home;
