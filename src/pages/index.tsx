@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 
 // Components
-import { RandomFox } from "@/components/RandomFox";
+import { LazyImage } from "@/components/LazyImage";
 
 // generate a random function between 1 and 123
 const random = () => Math.floor(Math.random() * 123) + 1;
@@ -36,6 +36,10 @@ const Home: NextPage = () => {
     setImages([...images, newImageItem]);
   };
 
+  const handleLoaded = (node: HTMLImageElement) => {
+    console.log("Image loaded ", node);
+  };
+
   return (
     <>
       <Head>
@@ -49,7 +53,16 @@ const Home: NextPage = () => {
         <h1 className="text-3xl font-bold underline">Hello React</h1>
         <button onClick={addNewFox}>Add new fox</button>
         {images.map(({ id, url }) => (
-          <RandomFox key={id} image={url} alt={url + id} />
+          <LazyImage
+            key={id}
+            src={url}
+            alt={url + id}
+            width={320}
+            height="auto"
+            className="rounded bg-gray-300"
+            onClick={() => console.log("hola")}
+            onLazyLoad={handleLoaded}
+          />
         ))}
       </main>
     </>
